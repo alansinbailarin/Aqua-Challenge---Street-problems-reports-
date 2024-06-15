@@ -1,7 +1,15 @@
 <template>
   <div style="font-family: 'Poppins'">
-    hola
+    <Navbar />
     <slot />
   </div>
 </template>
-<script setup></script>
+<script setup>
+import { initFlowbite } from "flowbite";
+
+onMounted(() => {
+  initFlowbite();
+});
+</script>
+
+<style></style>
