@@ -7,8 +7,9 @@ import { ref } from 'vue';
       <h1
         class="font-extrabold text-5xl md:text-7xl text-gray-900 dark:text-gray-300"
       >
-        Protege el agua,
-        <span class="bg-blue-500 text-white">protege el futuro</span>
+        Protege el agua, protege el<span futuro class="bg-blue-500 text-white"
+          >futuro</span
+        >
       </h1>
       <p class="mt-5 text-gray-600 font-thin dark:text-gray-400">
         Reporta fugas de agua en tiempo real y ayuda a conservar nuestro recurso
