@@ -1,6 +1,7 @@
 <template>
   <button
-    class="button-bezel primary-color text-center py-2 px-6 rounded-lg button-shadow transition-colors duration-500 ease-in-out"
+    type="button"
+    class="button-bezel primary-color text-sm text-center py-2 px-6 rounded-lg button-shadow transition-colors duration-500 ease-in-out"
     style=""
   >
     <slot />

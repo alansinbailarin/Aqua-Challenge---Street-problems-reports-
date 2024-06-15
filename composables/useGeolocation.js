@@ -4,7 +4,8 @@ export function useGeolocation() {
   const latitude = ref(null);
   const longitude = ref(null);
   const error = ref(null);
-  const loading = ref(true);
+  const loading = ref(false);
+  const router = useRouter();
 
   const getLocation = () => {
     loading.value = true;
@@ -19,6 +20,7 @@ export function useGeolocation() {
   const setPosition = (position) => {
     latitude.value = position.coords.latitude;
     longitude.value = position.coords.longitude;
+    setUrlParameters();
     loading.value = false;
   };
 
@@ -38,6 +40,15 @@ export function useGeolocation() {
         error.value = "Se produjo un error desconocido.";
         break;
     }
+  };
+
+  const setUrlParameters = () => {
+    router.push({
+      query: {
+        latitude: latitude.value,
+        longitude: longitude.value,
+      },
+    });
   };
 
   return {
