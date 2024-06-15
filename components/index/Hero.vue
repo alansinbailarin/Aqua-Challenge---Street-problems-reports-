@@ -54,7 +54,7 @@ import { ref } from 'vue';
       </div>
     </div>
   </UiModal>
-  <UiLoader v-if="loading" />
+  <UiLoader v-if="loading && !latitude && !longitude" />
 </template>
 <script setup>
 import { useGeolocation } from "../../composables/useGeolocation";
