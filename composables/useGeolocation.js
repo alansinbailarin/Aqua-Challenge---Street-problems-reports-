@@ -9,18 +9,13 @@ export function useGeolocation() {
   const router = useRouter();
   const geolocationStore = useGeolocationStore();
 
-  console.log(latitude);
-  console.log(longitude);
-
   const getLocation = () => {
-    if (latitude.value === null || longitude.value === null) {
-      loading.value = true;
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(setPosition, showError);
-      } else {
-        error.value = "La geolocalización no es soportada por este navegador.";
-        loading.value = false;
-      }
+    loading.value = true;
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(setPosition, showError);
+    } else {
+      error.value = "La geolocalización no es soportada por este navegador.";
+      loading.value = false;
     }
   };
 
