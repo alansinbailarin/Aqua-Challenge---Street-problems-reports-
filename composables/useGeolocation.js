@@ -1,25 +1,35 @@
 import { ref, onMounted } from "vue";
+import { useGeolocationStore } from "~/stores/useGeolocationStore";
 
 export function useGeolocation() {
-  const latitude = ref(null);
-  const longitude = ref(null);
+  const latitude = useLocalStorage("latitude");
+  const longitude = useLocalStorage("longitude");
   const error = ref(null);
   const loading = ref(false);
   const router = useRouter();
+  const geolocationStore = useGeolocationStore();
+
+  console.log(latitude);
+  console.log(longitude);
 
   const getLocation = () => {
-    loading.value = true;
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(setPosition, showError);
-    } else {
-      error.value = "La geolocalización no es soportada por este navegador.";
-      loading.value = false;
+    if (latitude.value === null || longitude.value === null) {
+      loading.value = true;
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(setPosition, showError);
+      } else {
+        error.value = "La geolocalización no es soportada por este navegador.";
+        loading.value = false;
+      }
     }
   };
 
   const setPosition = (position) => {
-    latitude.value = position.coords.latitude;
-    longitude.value = position.coords.longitude;
+    const lat = position.coords.latitude;
+    const long = position.coords.longitude;
+    latitude.value = lat;
+    longitude.value = long;
+    geolocationStore.setLocation(lat, long);
     setUrlParameters();
     loading.value = false;
   };

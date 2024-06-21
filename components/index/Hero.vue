@@ -56,10 +56,15 @@ import { ref } from 'vue';
     </div>
   </UiModal>
   <UiLoader v-if="loading && !latitude && !longitude" />
+  {{ error }}
+  {{ latitude }} {{ longitude }}
 </template>
 <script setup>
 import { useGeolocation } from "../../composables/useGeolocation";
+import { useGeolocationStore } from "../../stores/useGeolocationStore";
+import useLocalStorage from "@/composables/useLocalStorage";
 
-const { latitude, longitude, loading, error, getLocation } = useGeolocation();
+const { loading, error, getLocation } = useGeolocation();
+const { latitude, longitude } = useGeolocationStore();
 </script>
 <style scoped></style>
