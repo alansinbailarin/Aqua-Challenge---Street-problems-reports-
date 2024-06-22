@@ -15,13 +15,7 @@ import { ref } from 'vue';
         más valioso.
       </p>
 
-      <UiButton
-        class="mt-8"
-        data-modal-target="default-modal"
-        data-modal-toggle="default-modal"
-        @click="getLocation"
-        >Reportar fuga</UiButton
-      >
+      <UiButton class="mt-8" @click="handleAccept">Reportar fuga</UiButton>
     </section>
   </div>
   <UiModal
@@ -29,6 +23,7 @@ import { ref } from 'vue';
     accept-text="Reportar"
     decline-text="Cancelar"
     id="default-modal"
+    @accept="createReport()"
   >
     <div>
       <!-- Aqui pondre la descripcion de lo que se hara con este modal-->
@@ -56,15 +51,22 @@ import { ref } from 'vue';
     </div>
   </UiModal>
   <UiLoader v-if="loading && !latitude && !longitude" />
-  {{ error }}
-  {{ latitude }} {{ longitude }}
 </template>
 <script setup>
 import { useGeolocation } from "../../composables/useGeolocation";
-import { useGeolocationStore } from "../../stores/useGeolocationStore";
-import useLocalStorage from "@/composables/useLocalStorage";
 
-const { loading, error, getLocation } = useGeolocation();
-const { latitude, longitude } = useGeolocationStore();
+const { loading, error, latitude, longitude } = useGeolocation();
+
+const router = useRouter();
+
+const handleAccept = () => {
+  router.push({
+    path: "/report/new",
+    query: {
+      latitude: latitude.value,
+      longitude: longitude.value,
+    },
+  });
+};
 </script>
 <style scoped></style>

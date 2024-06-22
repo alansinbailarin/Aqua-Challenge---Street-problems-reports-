@@ -9,12 +9,12 @@
   >
     <div class="flex items-center justify-between">
       <div>
-        <NuxtLink
-          to="/"
+        <button
+          @click="goToHome()"
           class="text-xl font-bold text-gray-900 dark:text-gray-300"
         >
           WaterWatch
-        </NuxtLink>
+        </button>
       </div>
       <div class="gap-4 flex items-center">
         <NuxtLink to="/report/reports">Ver Reportes</NuxtLink>
@@ -30,6 +30,8 @@
 </template>
 <script setup>
 const isTransparent = ref(false);
+const router = useRouter();
+const { latitude, longitude } = useGeolocation();
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
@@ -42,10 +44,21 @@ const handleScroll = () => {
 
   isTransparent.value = scrollPosition > threshold;
 };
+
+const goToHome = () => {
+  if (latitude.value && longitude.value) {
+    router.push({
+      path: "/",
+      query: {
+        latitude: latitude.value,
+        longitude: longitude.value,
+      },
+    });
+  }
+};
 </script>
 <style scoped>
 nav {
-  /* backdrop-filter: none;  Para desactivar el desenfoque en navegadores que no lo admiten */
   transition: background-color 0.5s ease-in-out,
     backdrop-filter 0.3s ease-in-out;
 }

@@ -45,7 +45,7 @@
         <div
           class="flex items-center px-4 py-3 md:p-4 border-t border-gray-100 rounded-b dark:border-gray-600"
         >
-          <UiButton :data-modal-hide="id">
+          <UiButton @click="$emit('accept')" :data-modal-hide="id">
             {{ acceptText }}
           </UiButton>
           <UiSecondaryButton :data-modal-hide="id">

@@ -2,11 +2,12 @@ import { ref, onMounted } from "vue";
 import { useGeolocationStore } from "~/stores/useGeolocationStore";
 
 export function useGeolocation() {
-  const latitude = useLocalStorage("latitude");
-  const longitude = useLocalStorage("longitude");
+  const latitude = useLocalStorage(null, "latitude");
+  const longitude = useLocalStorage(null, "longitude");
   const error = ref(null);
   const loading = ref(false);
   const router = useRouter();
+  const route = useRoute();
   const geolocationStore = useGeolocationStore();
 
   const getLocation = () => {
@@ -16,6 +17,10 @@ export function useGeolocation() {
     } else {
       error.value = "La geolocalización no es soportada por este navegador.";
       loading.value = false;
+
+      latitude.value = 18.937774662711945;
+      longitude.value = -98.99769978949402;
+      setUrlParameters();
     }
   };
 
@@ -45,6 +50,10 @@ export function useGeolocation() {
         error.value = "Se produjo un error desconocido.";
         break;
     }
+
+    latitude.value = 18.937774662711945;
+    longitude.value = -98.99769978949402;
+    setUrlParameters();
   };
 
   const setUrlParameters = () => {

@@ -1,8 +1,8 @@
 import useLocalstorage from "@/composables/useLocalStorage";
 
 export const useGeolocationStore = defineStore("geolocation", () => {
-  const latitude = useLocalstorage("latitude", null);
-  const longitude = useLocalstorage("longitude", null);
+  const latitude = useLocalstorage(null, "latitude");
+  const longitude = useLocalstorage(null, "longitude");
 
   const setLocation = (lat, long) => {
     latitude.value = lat;

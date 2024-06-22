@@ -1,33 +1,20 @@
-export default function useLocalstorage(key, defaultValue) {
-  const val = ref(defaultValue);
+export default function useLocalStorage(initialValue, key) {
+  const val = ref(initialValue);
 
-  if (process.client) {
-    const storageVal = window.localStorage.getItem(key);
+  onMounted(() => {
+    const storageValue = window.localStorage.getItem(key);
 
-    if (storageVal) {
-      val.value = JSON.parse(storageVal);
+    if (storageValue) {
+      val.value = JSON.parse(storageValue);
     }
-
-    function handleStorageEvent(event) {
-      if (event.key === key) {
-        val.value = JSON.parse(event.newValue || "null");
-      }
-    }
-
-    window.addEventListener("storage", handleStorageEvent);
-
-    onScopeDispose(() =>
-      window.removeEventListener("storage", handleStorageEvent)
-    );
-
-    watch(
-      val,
-      (newValue) => window.localStorage.setItem(key, JSON.stringify(newValue)),
-      {
-        deep: true,
-      }
-    );
-  }
+  });
+  watch(
+    val,
+    (val) => {
+      window.localStorage.setItem(key, JSON.stringify(val));
+    },
+    { deep: true }
+  );
 
   return val;
 }

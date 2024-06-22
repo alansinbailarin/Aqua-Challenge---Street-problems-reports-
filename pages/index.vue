@@ -3,7 +3,5 @@
     <IndexHero />
   </div>
 </template>
-<script setup>
-const indexTransition = ref(true);
-</script>
+<script setup></script>
 <style scoped></style>
