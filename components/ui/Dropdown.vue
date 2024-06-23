@@ -35,7 +35,7 @@
     <div
       v-if="isOpen"
       :id="dataToggle"
-      class="absolute z-10 mt-1 bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700 dark:divide-gray-600"
+      class="absolute max-h-60 overflow-y-auto z-10 mt-1 bg-white divide-y divide-gray-100 rounded-lg shadow w-full dark:bg-gray-700 dark:divide-gray-600"
     >
       <ul class="text-sm text-gray-700 dark:text-gray-200">
         <li v-for="(item, index) in items" :key="index">

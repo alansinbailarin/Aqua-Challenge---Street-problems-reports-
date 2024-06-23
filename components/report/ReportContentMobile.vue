@@ -63,6 +63,59 @@
         ]"
       />
     </div>
+    <div class="grid grid-cols-1 mb-4">
+      <UiDropdown
+        id="impactButton"
+        label-text="Impacto"
+        data-toggle="impactMenu"
+        :dropdown-title="selectedImpact.text || 'Selecciona el impacto'"
+        @selecting="impactSelection"
+        :items="[
+          { text: 'Encharcamiento', value: 'waterlogging' },
+          { text: 'Erosión del Suelo', value: 'soilErosion' },
+          {
+            text: 'Deterioro de Infraestructuras',
+            value: 'infrastructureDeterioration',
+          },
+          { text: 'Contaminación del Agua', value: 'waterContamination' },
+          { text: 'Daños a la Propiedad', value: 'propertyDamage' },
+          { text: 'Incremento de Facturas', value: 'billIncrease' },
+          { text: 'Desperdicio de Recursos', value: 'resourceWaste' },
+          { text: 'Proliferación de Plagas', value: 'pestProliferation' },
+          { text: 'Impacto Ambiental', value: 'environmentalImpact' },
+          { text: 'Riesgos de Seguridad', value: 'safetyRisks' },
+          { text: 'Interrupción de Servicios', value: 'serviceInterruption' },
+        ]"
+      />
+    </div>
+    <div class="grid grid-cols-2 gap-3 mb-4">
+      <UiDropdown
+        id="leakSize"
+        label-text="Tamaño"
+        data-toggle="leakSizeMenu"
+        :dropdown-title="selectedLeakSize.text || 'Pequeña'"
+        @selecting="leakSizeSelection"
+        :items="[
+          { text: 'Pequeña', value: 'small' },
+          { text: 'Mediana', value: 'medium' },
+          { text: 'Grande', value: 'large' },
+        ]"
+      />
+      <UiDropdown
+        id="leakDuration"
+        label-text="Duración"
+        data-toggle="leakDurationMenu"
+        :dropdown-title="selectedLeakDuration.text || '< 1 hora'"
+        @selecting="leakDurationSelection"
+        :items="[
+          { text: '< 1 hora', value: 'less_than_1_hour' },
+          { text: '1-4 horas', value: '1_4_hours' },
+          { text: '4-24 horas', value: '4_24_hours' },
+          { text: '1-3 días', value: '1_3_days' },
+          { text: '> 3 días', value: 'more_than_3_days' },
+        ]"
+      />
+    </div>
     <div>
       <h1 class="text-gray-900 font-semibold">Sección de imagenes</h1>
       <p class="text-sm text-gray-400 mb-3">
@@ -88,11 +141,38 @@ const selectedLeakType = useLocalStorage(
   "selectedLeakType"
 );
 
+const selectedImpact = useLocalStorage(
+  { text: "Encharcamiento", value: "waterlogging" },
+  "selectedImpact"
+);
+
+const selectedLeakSize = useLocalStorage(
+  { text: "Pequeña", value: "small" },
+  "selectedLeakSize"
+);
+
+const selectedLeakDuration = useLocalStorage(
+  { text: "< 1 hora", value: "less_than_1_hour" },
+  "selectedLeakDuration"
+);
+
 function statusSelection(status) {
   selectedStatus.value = status;
 }
 
 function leakTypeSelection(leak) {
   selectedLeakType.value = leak;
+}
+
+function impactSelection(impact) {
+  selectedImpact.value = impact;
+}
+
+function leakSizeSelection(leakSize) {
+  selectedLeakSize.value = leakSize;
+}
+
+function leakDurationSelection(leakDuration) {
+  selectedLeakDuration.value = leakDuration;
 }
 </script>
