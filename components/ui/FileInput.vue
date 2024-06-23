@@ -2,7 +2,7 @@
   <div class="flex items-center justify-center w-full">
     <label
       for="dropzone-file"
-      class="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-200 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+      class="flex flex-col items-center justify-center w-full h-40 border-2 border-gray-200 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
     >
       <div class="flex flex-col items-center justify-center pt-3 pb-3">
         <svg
@@ -21,14 +21,88 @@
           />
         </svg>
         <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-          <span class="font-semibold">Click para añadir</span> o arrastra aqui
+          <span class="font-semibold">Click para añadir</span>
         </p>
         <p class="text-xs text-gray-400 dark:text-gray-400">
           PNG, JPG, MP4 (MAX. 800x400px)
         </p>
       </div>
-      <input id="dropzone-file" type="file" class="hidden" />
+      <input
+        id="dropzone-file"
+        type="file"
+        class="hidden"
+        @change="handleFileChange"
+        multiple
+      />
     </label>
+
+    <!-- Vista previa de archivos seleccionados -->
+  </div>
+  <div v-if="previewImages.length > 0">
+    <h3 class="text-sm font-semibold mt-3">Archivos Seleccionados:</h3>
+    <ul class="mt-1 grid grid-cols-2 gap-2">
+      <li
+        v-for="(preview, index) in previewImages"
+        :key="index"
+        class="relative"
+      >
+        <button
+          @click.prevent="removePreview(index)"
+          class="absolute top-0 right-0 p-1 bg-gray-200 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-500 hover:text-gray-800 dark:hover:text-gray-200 focus:outline-none"
+        >
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              fill-rule="evenodd"
+              d="M14.707 5.293a1 1 0 010 1.414L11.414 10l3.293 3.293a1 1 0 11-1.414 1.414L10 11.414l-3.293 3.293a1 1 0 01-1.414-1.414L8.586 10 5.293 6.707a1 1 0 111.414-1.414L10 8.586l3.293-3.293a1 1 0 011.414 0z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </button>
+        <img
+          v-if="preview.type.startsWith('image')"
+          :src="preview.url"
+          alt="Preview"
+          class="w-full rounded-lg shadow-md"
+        />
+        <video
+          v-else
+          :src="preview.url"
+          class="w-full rounded-lg shadow-md"
+          controls
+        ></video>
+      </li>
+    </ul>
   </div>
 </template>
-<script setup></script>
+
+<script setup>
+import { ref } from "vue";
+
+const previewImages = ref([]);
+
+function handleFileChange(event) {
+  const files = event.target.files;
+  if (!files) return;
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      const url = e.target.result;
+      const type = file.type.startsWith("image") ? "image" : "video";
+      previewImages.value.push({ url, type });
+    };
+
+    reader.readAsDataURL(file);
+  }
+}
+
+function removePreview(index) {
+  previewImages.value.splice(index, 1);
+}
+</script>
+
+<style scoped>
+/* Estilos adicionales según necesidades */
+</style>
