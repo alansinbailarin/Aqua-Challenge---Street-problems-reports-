@@ -1,5 +1,4 @@
 <template>
-  <!-- drawer init and toggle -->
   <div
     :class="[
       'fixed z-40 w-full shadow-lg bg-white border-t border-gray-200 rounded-t-lg dark:border-gray-700 dark:bg-gray-800 transition-transform left-0 right-0',
@@ -25,7 +24,7 @@
       ></h5>
     </div>
     <div class="flex flex-col h-full">
-      <div class="flex-1 overflow-y-auto p-4">
+      <div class="flex-1 overflow-y-auto p-4 pb-[70px]">
         <ReportContentMobile />
       </div>
     </div>
