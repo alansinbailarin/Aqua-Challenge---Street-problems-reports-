@@ -17,7 +17,9 @@
         </button>
       </div>
       <div class="gap-4 flex items-center">
-        <NuxtLink to="/report/reports">Ver Reportes</NuxtLink>
+        <NuxtLink to="/report/reports" class="hidden md:flex"
+          >Ver Reportes</NuxtLink
+        >
         <UiLink
           to="/report/report"
           class="text-gray-900 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200"
