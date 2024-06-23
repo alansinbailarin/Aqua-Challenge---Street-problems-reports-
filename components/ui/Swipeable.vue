@@ -4,7 +4,7 @@
       'fixed z-40 w-full shadow-lg bg-white border-t border-gray-200 rounded-t-lg dark:border-gray-700 dark:bg-gray-800 transition-transform left-0 right-0',
       {
         'translate-y-full bottom-[60px]': !isOpen,
-        'translate-y-0 bottom-0 h-[70vh] shadow-xl': isOpen,
+        'translate-y-0 bottom-0 h-[60vh] shadow-xl': isOpen,
       },
     ]"
     id="drawer-swipe"
