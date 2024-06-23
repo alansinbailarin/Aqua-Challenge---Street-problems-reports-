@@ -91,7 +91,11 @@ function handleFileChange(event) {
     reader.onload = (e) => {
       const url = e.target.result;
       const type = file.type.startsWith("image") ? "image" : "video";
-      previewImages.value.push({ url, type });
+
+      // Verificar si el archivo ya está en previewImages
+      if (!isFileAlreadySelected(url)) {
+        previewImages.value.push({ url, type });
+      }
     };
 
     reader.readAsDataURL(file);
@@ -100,6 +104,10 @@ function handleFileChange(event) {
 
 function removePreview(index) {
   previewImages.value.splice(index, 1);
+}
+
+function isFileAlreadySelected(url) {
+  return previewImages.value.some((preview) => preview.url === url);
 }
 </script>
 
