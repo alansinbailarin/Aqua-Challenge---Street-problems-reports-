@@ -7,7 +7,6 @@ export function useGeolocation() {
   const error = ref(null);
   const loading = ref(false);
   const router = useRouter();
-  const route = useRoute();
   const geolocationStore = useGeolocationStore();
 
   const getLocation = () => {

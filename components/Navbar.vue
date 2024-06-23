@@ -1,11 +1,11 @@
 <template>
   <nav
     :class="{
-      'bg-white dark:bg-gray-950': !isTransparent,
+      'bg-white ': !isTransparent,
       'bg-white dark:bg-gray-950 bg-opacity-80 backdrop-filter backdrop-blur transition-all duration-300 ease-in-out bg-gradient-to-t from-transparent via-transparent to-white dark:to-gray-950':
         isTransparent,
     }"
-    class="z-10 bg-white dark:bg-gray-950 w-full py-5 px-5 md:px-8 sticky top-0 border-b border-gray-100 dark:border-gray-900"
+    class="z-10 w-full py-5 px-5 md:px-8 sticky top-0 border-b border-gray-100 dark:border-gray-900"
   >
     <div class="flex items-center justify-between">
       <div>
