@@ -2,7 +2,7 @@
   <!-- drawer init and toggle -->
   <div
     :class="[
-      'fixed z-40 w-full shadow-lg overflow-y-auto bg-white border-t border-gray-200 rounded-t-lg dark:border-gray-700 dark:bg-gray-800 transition-transform left-0 right-0',
+      'fixed z-40 w-full shadow-lg bg-white border-t border-gray-200 rounded-t-lg dark:border-gray-700 dark:bg-gray-800 transition-transform left-0 right-0',
       {
         'translate-y-full bottom-[60px]': !isOpen,
         'translate-y-0 bottom-0 h-[70vh] shadow-xl': isOpen,
@@ -24,8 +24,10 @@
         class="inline-flex items-center text-base text-gray-500 dark:text-gray-400 font-medium"
       ></h5>
     </div>
-    <div class="p-4">
-      <!-- Aquí va tu contenido -->
+    <div class="flex flex-col h-full">
+      <div class="flex-1 overflow-y-auto p-4">
+        <ReportContentMobile />
+      </div>
     </div>
   </div>
 </template>
