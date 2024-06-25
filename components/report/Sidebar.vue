@@ -134,28 +134,28 @@
 
 <script setup>
 const mapStore = useMapStore();
+const fileStore = useFileStore();
+
 const location = computed(() => mapStore.selectedLocationName);
+const previewImages = computed(() => fileStore.previewImages);
+
 const gravity = useLocalStorage(50, "reportGravity");
 const selectedStatus = useLocalStorage(
   { text: "Nuevo", value: "new" },
   "selectedReportStatus"
 );
-
 const selectedLeakType = useLocalStorage(
   { text: "Potable", value: "drinkingWater" },
   "selectedLeakType"
 );
-
 const selectedImpact = useLocalStorage(
   { text: "Encharcamiento", value: "waterlogging" },
   "selectedImpact"
 );
-
 const selectedLeakSize = useLocalStorage(
   { text: "Pequeña", value: "small" },
   "selectedLeakSize"
 );
-
 const selectedLeakDuration = useLocalStorage(
   { text: "< 1 hora", value: "less_than_1_hour" },
   "selectedLeakDuration"

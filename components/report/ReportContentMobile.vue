@@ -117,10 +117,10 @@
       />
     </div>
     <div>
-      <h1 class="text-gray-900 font-semibold">Sección de imagenes</h1>
+      <h1 class="text-gray-900 font-semibold">Sección de imágenes</h1>
       <p class="text-sm text-gray-400 mb-3">
-        Introduce las imagenes/videos necesarios para crear tu reporte, se
-        bastante especifico con las mismas y recuerda que la calidad es
+        Introduce las imágenes/videos necesarios para crear tu reporte, sé
+        bastante específico con las mismas y recuerda que la calidad es
         importante!
       </p>
       <UiFileInput />
