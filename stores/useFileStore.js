@@ -4,6 +4,7 @@ export const useFileStore = defineStore("fileStore", () => {
   const maxFileSize = 5 * 1024 * 1024; // 5 MB in bytes
   const maxImages = 5;
   const maxVideos = 5;
+  const maxAspectRatio = 1; // Maximum aspect ratio (height/width)
 
   function addFile(file) {
     if (previewImages.value.length >= maxFiles) {
@@ -38,13 +39,23 @@ export const useFileStore = defineStore("fileStore", () => {
         return;
       }
 
-      if (!isFileAlreadySelected(file)) {
-        previewImages.value.push({
-          url,
-          type,
-          name: file.name,
-          size: file.size,
-        });
+      if (!isFileAlreadySelected(url)) {
+        const img = new Image();
+        img.onload = () => {
+          const aspectRatio = img.height / img.width;
+          if (aspectRatio > maxAspectRatio) {
+            alert("Images that are too tall are not allowed.");
+            return;
+          }
+
+          previewImages.value.push({
+            url,
+            type,
+            name: file.name,
+            size: file.size,
+          });
+        };
+        img.src = url;
       }
     };
 
@@ -53,12 +64,18 @@ export const useFileStore = defineStore("fileStore", () => {
 
   function removeFile(index) {
     previewImages.value.splice(index, 1);
+    resetFileInput();
   }
 
-  function isFileAlreadySelected(file) {
-    return previewImages.value.some(
-      (preview) => preview.name === file.name && preview.size === file.size
-    );
+  function isFileAlreadySelected(url) {
+    return previewImages.value.some((preview) => preview.url === url);
+  }
+
+  function resetFileInput() {
+    const fileInput = document.getElementById("dropzone-file");
+    if (fileInput) {
+      fileInput.value = "";
+    }
   }
 
   return {
