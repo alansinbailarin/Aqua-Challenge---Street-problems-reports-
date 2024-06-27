@@ -1,10 +1,10 @@
 export const useFileStore = defineStore("fileStore", () => {
   const previewImages = ref([]);
   const maxFiles = 10;
-  const maxFileSize = 5 * 1024 * 1024; // 5 MB in bytes
+  const maxFileSize = 5 * 1024 * 1024;
   const maxImages = 5;
   const maxVideos = 5;
-  const maxAspectRatio = 1; // Maximum aspect ratio (height/width)
+  const maxAspectRatio = 1;
 
   function addFile(file) {
     if (previewImages.value.length >= maxFiles) {
@@ -42,11 +42,11 @@ export const useFileStore = defineStore("fileStore", () => {
       if (!isFileAlreadySelected(url)) {
         const img = new Image();
         img.onload = () => {
-          const aspectRatio = img.height / img.width;
-          if (aspectRatio > maxAspectRatio) {
-            alert("Images that are too tall are not allowed.");
-            return;
-          }
+          // const aspectRatio = img.height / img.width;
+          // if (aspectRatio > maxAspectRatio) {
+          //   alert("Images that are too tall are not allowed.");
+          //   return;
+          // }
 
           previewImages.value.push({
             url,

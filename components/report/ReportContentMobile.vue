@@ -116,7 +116,7 @@
         ]"
       />
     </div>
-    <div>
+    <div class="mb-3">
       <h1 class="text-gray-900 font-semibold">Sección de imágenes</h1>
       <p class="text-sm text-gray-400 mb-3">
         Introduce las imágenes/videos necesarios para crear tu reporte, sé
@@ -125,6 +125,7 @@
       </p>
       <UiFileInput />
     </div>
+    <UiButton class="w-full">Enviar reporte</UiButton>
   </form>
 </template>
 <script setup>
