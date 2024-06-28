@@ -2,7 +2,7 @@
   <transition name="sidebar-overlay">
     <div
       v-if="openSidebar"
-      class="fixed inset-0 bg-black opacity-30 backdrop-blur-3xl z-10"
+      class="fixed inset-0 bg-black opacity-30 backdrop-blur-3xl z-10 h-screen"
       @click="closeSidebar"
     ></div>
   </transition>
