@@ -71,7 +71,11 @@
           id="impactButton"
           label-text="Impacto"
           data-toggle="impactMenu"
-          :dropdown-title="selectedImpact.text || 'Selecciona el impacto'"
+          :dropdown-title="
+            selectedImpact.length > 0
+              ? selectedImpact[selectedImpact.length - 1].text
+              : 'Selecciona el impacto'
+          "
           @selecting="impactSelection"
           :items="[
             { text: 'Encharcamiento', value: 'waterlogging' },
@@ -90,6 +94,16 @@
             { text: 'Interrupción de Servicios', value: 'serviceInterruption' },
           ]"
         />
+        <ul class="mt-2 space-y-2">
+          <li
+            v-for="(impact, index) in selectedImpact"
+            :key="index"
+            @click="removeImpact(index)"
+            class="flex justify-between cursor-pointer items-center hover:text-red-500 transition-all ease-in-out duration-300 hover:bg-gray-100 bg-gray-50 px-5 py-2.5 text-sm text-gray-700 rounded"
+          >
+            <span>{{ impact.text }} </span>
+          </li>
+        </ul>
       </div>
       <div class="grid grid-cols-2 gap-3 mb-4">
         <UiDropdown
@@ -128,7 +142,10 @@
         </p>
         <UiFileInput />
       </div>
-      <UiButton class="w-full">Enviar reporte</UiButton>
+      <div class="flex items-center justify-between">
+        <UiButton class="w-full">Enviar reporte</UiButton>
+        <UiSecondaryButton class="w-full">Pre Visualizar</UiSecondaryButton>
+      </div>
     </form>
   </aside>
 </template>
@@ -139,6 +156,7 @@ const fileStore = useFileStore();
 
 const location = computed(() => mapStore.selectedLocationName);
 const previewImages = computed(() => fileStore.previewImages);
+const showTrashIcon = ref(false);
 
 const gravity = useLocalStorage(50, "reportGravity");
 const selectedStatus = useLocalStorage(
@@ -149,10 +167,8 @@ const selectedLeakType = useLocalStorage(
   { text: "Potable", value: "drinkingWater" },
   "selectedLeakType"
 );
-const selectedImpact = useLocalStorage(
-  { text: "Encharcamiento", value: "waterlogging" },
-  "selectedImpact"
-);
+const selectedImpact = useLocalStorage([], "selectedImpact");
+
 const selectedLeakSize = useLocalStorage(
   { text: "Pequeña", value: "small" },
   "selectedLeakSize"
@@ -171,7 +187,18 @@ function leakTypeSelection(leak) {
 }
 
 function impactSelection(impact) {
-  selectedImpact.value = impact;
+  const index = selectedImpact.value.findIndex(
+    (item) => item.value === impact.value
+  );
+  if (index === -1) {
+    selectedImpact.value.push(impact);
+  } else {
+    selectedImpact.value.splice(index, 1);
+  }
+}
+
+function removeImpact(index) {
+  selectedImpact.value.splice(index, 1);
 }
 
 function leakSizeSelection(leakSize) {
