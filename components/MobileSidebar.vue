@@ -45,7 +45,7 @@
                   }}</span>
                 </div>
                 <div>
-                  <span class="text-gray-400 font-thin text-sm">{{
+                  <span class="text-gray-400 font-thin text-xs">{{
                     formatReportDate(report.date)
                   }}</span>
                 </div>
