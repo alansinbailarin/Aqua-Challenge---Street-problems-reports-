@@ -2,10 +2,10 @@
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      googleMapsSecret: process.env.NUXT_MAPS_API_KEY,
+      mapsApiKey: process.env.NUXT_MAPS_API_KEY,
     },
   },
-  devtools: { enabled: false },
+  devtools: { enabled: true },
   modules: ["@pinia/nuxt", "@nuxtjs/tailwindcss", "@nuxtjs/google-fonts"],
   googleFonts: {
     families: {

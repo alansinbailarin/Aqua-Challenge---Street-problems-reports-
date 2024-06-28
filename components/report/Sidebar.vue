@@ -19,6 +19,7 @@
           label-for="report-title"
           label-text="Define el problema"
           placeholder="Fuga de agua masiva..."
+          v-model="form.title"
         />
       </div>
       <div class="mb-4">
@@ -26,13 +27,14 @@
           label-for="report-description"
           label-text="Escribe una descripcion del problema"
           placeholder="Una alcantarilla esta tirando agua..."
+          v-model="form.description"
         />
       </div>
       <div class="mb-2">
         <UiRange
           label-text="Gravedad de la fuga"
           label-for="gravity"
-          v-model="gravity"
+          v-model="form.gravity"
           :min="1"
           :max="100"
         />
@@ -143,7 +145,7 @@
         <UiFileInput />
       </div>
       <div class="flex items-center justify-between">
-        <UiButton class="w-full">Enviar reporte</UiButton>
+        <UiButton class="w-full">Reportar</UiButton>
         <UiSecondaryButton class="w-full">Pre Visualizar</UiSecondaryButton>
       </div>
     </form>
@@ -158,6 +160,8 @@ const location = computed(() => mapStore.selectedLocationName);
 const previewImages = computed(() => fileStore.previewImages);
 const showTrashIcon = ref(false);
 
+const title = useLocalStorage(null, "reportTitle");
+const description = useLocalStorage(null, "reportDescription");
 const gravity = useLocalStorage(50, "reportGravity");
 const selectedStatus = useLocalStorage(
   { text: "Nuevo", value: "new" },
@@ -208,4 +212,16 @@ function leakSizeSelection(leakSize) {
 function leakDurationSelection(leakDuration) {
   selectedLeakDuration.value = leakDuration;
 }
+
+const form = reactive({
+  title: title || null,
+  description: description || null,
+  gravity: gravity || null,
+  status: selectedStatus || null,
+  leak: selectedLeakType || null,
+  impacts: selectedImpact || null,
+  size: selectedLeakSize || null,
+  duration: selectedLeakDuration || null,
+  images: previewImages || null,
+});
 </script>

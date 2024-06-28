@@ -16,6 +16,7 @@
         label-for="report-title"
         label-text="Define el problema"
         placeholder="Fuga de agua masiva..."
+        v-model="form.title"
       />
     </div>
     <div class="mb-4">
@@ -23,13 +24,14 @@
         label-for="report-description"
         label-text="Escribe una descripcion del problema"
         placeholder="Una alcantarilla esta tirando agua..."
+        v-model="form.description"
       />
     </div>
     <div class="mb-2">
       <UiRange
         label-text="Gravedad de la fuga"
         label-for="gravity"
-        v-model="gravity"
+        v-model="form.gravity"
         :min="1"
         :max="100"
       />
@@ -53,7 +55,7 @@
         id="leakType"
         label-text="Fuga"
         data-toggle="leakTypeMenu"
-        :dropdown-title="selectedLeakType.text || 'Agua potable'"
+        :dropdown-title="selectedLeakType.text || 'Potable'"
         @selecting="leakTypeSelection"
         :items="[
           { text: 'Potable', value: 'drinkingWater' },
@@ -68,7 +70,11 @@
         id="impactButton"
         label-text="Impacto"
         data-toggle="impactMenu"
-        :dropdown-title="selectedImpact.text || 'Selecciona el impacto'"
+        :dropdown-title="
+          selectedImpact.length > 0
+            ? selectedImpact[selectedImpact.length - 1].text
+            : 'Selecciona el impacto'
+        "
         @selecting="impactSelection"
         :items="[
           { text: 'Encharcamiento', value: 'waterlogging' },
@@ -87,6 +93,16 @@
           { text: 'Interrupción de Servicios', value: 'serviceInterruption' },
         ]"
       />
+      <ul class="mt-2 space-y-2">
+        <li
+          v-for="(impact, index) in selectedImpact"
+          :key="index"
+          @click="removeImpact(index)"
+          class="flex justify-between cursor-pointer items-center hover:text-red-500 transition-all ease-in-out duration-300 hover:bg-gray-100 bg-gray-50 px-5 py-2.5 text-sm text-gray-700 rounded"
+        >
+          <span>{{ impact.text }} </span>
+        </li>
+      </ul>
     </div>
     <div class="grid grid-cols-2 gap-3 mb-4">
       <UiDropdown
@@ -117,41 +133,46 @@
       />
     </div>
     <div class="mb-3">
-      <h1 class="text-gray-900 font-semibold">Sección de imágenes</h1>
+      <h1 class="text-gray-900 font-semibold">Sección de imagenes</h1>
       <p class="text-sm text-gray-400 mb-3">
-        Introduce las imágenes/videos necesarios para crear tu reporte, sé
-        bastante específico con las mismas y recuerda que la calidad es
+        Introduce las imagenes/videos necesarios para crear tu reporte, se
+        bastante especifico con las mismas y recuerda que la calidad es
         importante!
       </p>
       <UiFileInput />
     </div>
-    <UiButton class="w-full">Enviar reporte</UiButton>
+    <div class="flex items-center justify-between">
+      <UiButton class="w-full">Reportar</UiButton>
+      <UiSecondaryButton class="w-full">Pre Visualizar</UiSecondaryButton>
+    </div>
   </form>
 </template>
+
 <script setup>
 const mapStore = useMapStore();
+const fileStore = useFileStore();
+
 const location = computed(() => mapStore.selectedLocationName);
+const previewImages = computed(() => fileStore.previewImages);
+const showTrashIcon = ref(false);
+
+const title = useLocalStorage(null, "reportTitle");
+const description = useLocalStorage(null, "reportDescription");
 const gravity = useLocalStorage(50, "reportGravity");
 const selectedStatus = useLocalStorage(
   { text: "Nuevo", value: "new" },
   "selectedReportStatus"
 );
-
 const selectedLeakType = useLocalStorage(
   { text: "Potable", value: "drinkingWater" },
   "selectedLeakType"
 );
-
-const selectedImpact = useLocalStorage(
-  { text: "Encharcamiento", value: "waterlogging" },
-  "selectedImpact"
-);
+const selectedImpact = useLocalStorage([], "selectedImpact");
 
 const selectedLeakSize = useLocalStorage(
   { text: "Pequeña", value: "small" },
   "selectedLeakSize"
 );
-
 const selectedLeakDuration = useLocalStorage(
   { text: "< 1 hora", value: "less_than_1_hour" },
   "selectedLeakDuration"
@@ -166,7 +187,18 @@ function leakTypeSelection(leak) {
 }
 
 function impactSelection(impact) {
-  selectedImpact.value = impact;
+  const index = selectedImpact.value.findIndex(
+    (item) => item.value === impact.value
+  );
+  if (index === -1) {
+    selectedImpact.value.push(impact);
+  } else {
+    selectedImpact.value.splice(index, 1);
+  }
+}
+
+function removeImpact(index) {
+  selectedImpact.value.splice(index, 1);
 }
 
 function leakSizeSelection(leakSize) {
@@ -176,4 +208,16 @@ function leakSizeSelection(leakSize) {
 function leakDurationSelection(leakDuration) {
   selectedLeakDuration.value = leakDuration;
 }
+
+const form = reactive({
+  title: title || null,
+  description: description || null,
+  gravity: gravity || null,
+  status: selectedStatus || null,
+  leak: selectedLeakType || null,
+  impacts: selectedImpact || null,
+  size: selectedLeakSize || null,
+  duration: selectedLeakDuration || null,
+  images: previewImages || null,
+});
 </script>
