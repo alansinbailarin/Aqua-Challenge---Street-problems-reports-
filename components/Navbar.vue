@@ -12,7 +12,9 @@
         <button @click="goToHome()" class="text-gray-700 font-bold">
           Inicio
         </button>
-        <NuxtLink to="#" class="text-gray-700 font-bold">Ver reportes</NuxtLink>
+        <NuxtLink to="#" class="text-gray-700 font-bold"
+          >Explorar reportes</NuxtLink
+        >
         <NuxtLink to="#" class="text-gray-700 font-bold">Incentivos</NuxtLink>
       </div>
       <div>
