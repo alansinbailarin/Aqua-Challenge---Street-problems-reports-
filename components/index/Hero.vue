@@ -18,38 +18,6 @@ import { ref } from 'vue';
       <UiButton class="mt-8" @click="handleAccept">Reportar fuga</UiButton>
     </section>
   </div>
-  <UiModal
-    title="Reporta tu problema"
-    accept-text="Reportar"
-    decline-text="Cancelar"
-    id="default-modal"
-    @accept="createReport()"
-  >
-    <div>
-      <!-- Aqui pondre la descripcion de lo que se hara con este modal-->
-      <p class="text-sm mb-2 leading-relaxed text-gray-400 dark:text-gray-400">
-        Los detalles de tu reporte serán enviados a las autoridades locales, a
-        los encargados de la red de agua potable de tu comunidad y a todos los
-        usuarios interesados en ver el reporte.
-      </p>
-      <div class="mb-2">
-        <UiTextInput
-          label-text="Titulo del reporte"
-          label-for="report-title"
-          placeholder="Escribe el titulo de tu reporte"
-        />
-      </div>
-      <div>
-        <UiTextAreaInput
-          label-text="Explicanos el problema"
-          label-for="report-description"
-          placeholder="Escribe un poco acerca del problema que esta sucediendo en tu comunidad"
-          rows="6"
-          cols="50"
-        />
-      </div>
-    </div>
-  </UiModal>
   <UiLoader v-if="loading && !latitude && !longitude" />
 </template>
 <script setup>

@@ -2,7 +2,7 @@
   <aside
     class="w-3/12 bg-white border-r border-gray-100 p-4 shadow-sm overflow-y-auto overflow-auto"
   >
-    <div>
+    <div class="mt-20">
       <h1 class="font-bold mb-2 text-xl">Tu problema puede ser escuchado 🦻🏻</h1>
       <div class="flex items-center gap-3 mb-1">
         <p class="text-blue-500 text-sm">{{ location }}</p>

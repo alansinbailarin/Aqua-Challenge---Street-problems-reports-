@@ -12,7 +12,7 @@ const { getLocation } = useGeolocation();
 useHead({
   script: [
     {
-      src: `https://maps.googleapis.com/maps/api/js?key=${config.public.googleMapsSecret}&libraries=places`,
+      src: `https://maps.googleapis.com/maps/api/js?key=${config.public.googleMapsSecret}&loading=async&libraries=places`,
       defer: true,
       async: true,
     },

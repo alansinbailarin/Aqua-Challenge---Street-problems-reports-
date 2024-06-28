@@ -1,10 +1,10 @@
 <template>
   <div
     :class="[
-      'fixed z-10 w-full shadow-lg bg-white border-t border-gray-200 rounded-t-lg dark:border-gray-700 dark:bg-gray-800 transition-transform left-0 right-0',
+      'fixed z-10 w-full shadow-lg bg-white border-t border-gray-200 rounded-t-lg dark:border-gray-700 dark:bg-gray-800 transition-transform ease-in-out duration-300 left-0 right-0 top-96',
       {
         'translate-y-full bottom-[60px]': !isOpen,
-        'translate-y-0 bottom-0 h-[60vh] shadow-xl': isOpen,
+        'translate-y-0  bottom-0 h-[60vh] shadow-xl': isOpen,
       },
     ]"
   >

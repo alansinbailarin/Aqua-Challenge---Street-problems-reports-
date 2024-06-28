@@ -1,7 +1,7 @@
 <template>
   <nav
     :class="{
-      'bg-white ': !isTransparent,
+      'bg-white': !isTransparent,
       'bg-white dark:bg-gray-950 bg-opacity-80 backdrop-filter backdrop-blur transition-all duration-300 ease-in-out bg-gradient-to-t from-transparent via-transparent to-white dark:to-gray-950':
         isTransparent,
     }"
@@ -17,11 +17,9 @@
         </button>
       </div>
       <div class="gap-4 flex items-center">
-        <NuxtLink to="/report/reports" class="hidden md:flex"
-          >Ver Reportes</NuxtLink
-        >
+        <NuxtLink to="#" class="hidden md:flex">Ver Reportes</NuxtLink>
         <UiLink
-          to="/report/report"
+          to="#"
           class="text-gray-900 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200"
         >
           Reportar fuga
@@ -33,9 +31,10 @@
 <script setup>
 const isTransparent = ref(false);
 const router = useRouter();
-const { latitude, longitude } = useGeolocation();
+const { latitude, longitude, getLocation } = useGeolocation();
 
 onMounted(() => {
+  getLocation();
   window.addEventListener("scroll", handleScroll);
 });
 
@@ -61,17 +60,12 @@ const goToHome = () => {
 </script>
 <style scoped>
 nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   transition: background-color 0.5s ease-in-out,
     backdrop-filter 0.3s ease-in-out;
-}
-
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 0.3s ease-in-out;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
 }
 </style>

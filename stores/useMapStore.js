@@ -32,6 +32,10 @@ export const useMapStore = defineStore("mapStore", () => {
     }
   }
 
+  function isMapLoaded() {
+    return map && map.getCenter();
+  }
+
   function addMarker(position, router) {
     if (marker) {
       marker.setMap(null);
@@ -40,7 +44,7 @@ export const useMapStore = defineStore("mapStore", () => {
     marker = new google.maps.Marker({
       position: position,
       map: map,
-      title: "Selected Location",
+      title: "Ubicación seleccionada",
     });
 
     selectedLocation.value.lat = position.lat;
@@ -66,10 +70,10 @@ export const useMapStore = defineStore("mapStore", () => {
           selectedLocation.value.name = results[0].formatted_address;
           selectedLocationName.value = selectedLocation.value.name;
         } else {
-          console.log("No results found");
+          console.log("Resultados no encontrados");
         }
       } else {
-        console.log("Geocoder failed due to: " + status);
+        console.log("Geolocalizador fallido con status: : " + status);
       }
     });
   }
@@ -80,5 +84,6 @@ export const useMapStore = defineStore("mapStore", () => {
     initializeMap,
     addMarker,
     getPlaceName,
+    isMapLoaded,
   };
 });
