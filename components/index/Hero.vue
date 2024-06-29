@@ -1,6 +1,6 @@
-import { ref } from 'vue';
 <template>
   <div
+    v-if="heroTransition"
     class="absolute inset-0 h-full w-full bg-white dark:bg-gray-950 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#101010_1px,transparent_1px)] [background-size:16px_16px] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_60%,transparent_100%)] flex items-center justify-center"
   >
     <section class="text-center mx-8">
@@ -21,11 +21,10 @@ import { ref } from 'vue';
   <UiLoader v-if="loading && !latitude && !longitude" />
 </template>
 <script setup>
-import { useGeolocation } from "../../composables/useGeolocation";
-
 const { loading, error, latitude, longitude } = useGeolocation();
 
 const router = useRouter();
+const heroTransition = ref(true);
 
 const handleAccept = () => {
   router.push({

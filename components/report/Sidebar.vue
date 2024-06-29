@@ -13,7 +13,7 @@
         usuarios interesados en ver el reporte.
       </p>
     </div>
-    <form>
+    <form @submit.prevent="submit">
       <div class="mb-4">
         <UiTextInput
           label-for="report-title"
@@ -145,7 +145,7 @@
         <UiFileInput />
       </div>
       <div class="flex items-center justify-between">
-        <UiButton class="w-full">Reportar</UiButton>
+        <UiButton type="submit" class="w-full">Reportar</UiButton>
         <UiSecondaryButton class="w-full">Pre Visualizar</UiSecondaryButton>
       </div>
     </form>
@@ -223,5 +223,10 @@ const form = reactive({
   size: selectedLeakSize || null,
   duration: selectedLeakDuration || null,
   images: previewImages || null,
+  location: location || null,
 });
+
+const submit = () => {
+  console.log(form);
+};
 </script>

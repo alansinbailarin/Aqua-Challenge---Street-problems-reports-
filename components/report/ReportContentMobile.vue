@@ -219,5 +219,6 @@ const form = reactive({
   size: selectedLeakSize || null,
   duration: selectedLeakDuration || null,
   images: previewImages || null,
+  location: location || null,
 });
 </script>

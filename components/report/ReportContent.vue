@@ -1,6 +1,9 @@
 <template>
   <section class="flex-1 p-5 relative">
-    <div ref="mapContainer" class="absolute inset-0"></div>
+    <div
+      ref="mapContainer"
+      class="absolute inset-0 top-16 md:top-20 bottom-14 md:bottom-0"
+    ></div>
   </section>
 </template>
 
