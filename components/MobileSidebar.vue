@@ -104,7 +104,7 @@
         </div>
       </div>
 
-      <section v-if="user" class="">
+      <section v-if="user" class="bottom-4">
         <button
           class="w-full px-4 py-2 bg-red-500 text-white rounded-md"
           @click="logout"
@@ -112,7 +112,7 @@
           Cerrar sesión
         </button>
       </section>
-      <section v-else class="flex flex-col gap-2">
+      <section v-else class="flex flex-col gap-2 bottom-4">
         <UiLinkSecondary to="/auth/login" class="md:hidden shadow"
           >Acceder</UiLinkSecondary
         >
