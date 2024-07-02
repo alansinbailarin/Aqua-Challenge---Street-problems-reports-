@@ -7,64 +7,135 @@
     ></div>
   </transition>
   <aside
-    class="fixed top-0 right-0 z-50 h-screen bg-white shadow-lg w-80 transform transition-transform ease-in-out duration-300"
+    class="fixed top-0 right-0 z-50 h-screen bg-white shadow-lg w-[22rem] transform transition-transform ease-in-out duration-300"
     :class="{
       'translate-x-0': openSidebar,
       'translate-x-full': !openSidebar,
     }"
   >
-    <div class="p-4">
-      <section class="flex items-center justify-between">
-        <div>
-          <p class="font-semibold text-gray-800">Alan Pacheco</p>
-          <p class="text-sm text-gray-400 font-thin">agpsalgado@gmail.com</p>
-        </div>
-        <div>
-          <span
-            class="bg-white border text-sm text-gray-700 border-gray-200 rounded-full px-3 py-1"
-            >190</span
-          >
-        </div>
-      </section>
-      <div class="border-b w-full my-4"></div>
+    <div class="p-4 flex flex-col justify-between h-screen">
+      <div>
+        <section v-if="user" class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div v-if="user.providerData[0].photoURL !== null">
+              <picture>
+                <source
+                  :srcset="user.providerData[0].photoURL"
+                  media="(orientation: portrait)"
+                />
+                <img
+                  :src="user.providerData[0].photoURL"
+                  :alt="`${user.email} image`"
+                  class="w-12 rounded-full"
+                />
+              </picture>
+            </div>
+            <div v-else class="flex items-center">
+              <picture class="cursor-pointer">
+                <source
+                  srcset="/public/img/noimagep.jpg"
+                  media="(orientation: portrait)"
+                />
+                <img
+                  src="/public/img/noimagep.jpg"
+                  :alt="`${user.email} image`"
+                  class="w-12 rounded-md"
+                />
+              </picture>
+            </div>
+            <div>
+              <h1 class="font-extrabold text-sm text-gray-800">
+                {{ user.uid }}
+              </h1>
+              <span class="text-gray-400 font-thin text-sm">{{
+                user.email
+              }}</span>
+            </div>
+          </div>
+          <div class="border-b w-full my-4"></div>
+        </section>
 
-      <section>
-        <h3 class="text-sm text-gray-400">Recientes</h3>
-        <div class="mt-4 space-y-3">
-          <div v-for="report in reports">
-            <div class="flex gap-3">
-              <img
-                :src="report.img"
-                :alt="report.title"
-                class="min-w-16 h-12 object-fill rounded-md shadow-sm"
-              />
-              <div>
+        <section>
+          <h3 class="text-sm text-gray-400">Recientes</h3>
+          <div class="mt-4 space-y-3">
+            <div v-for="report in reports">
+              <div class="flex gap-3">
+                <img
+                  :src="report.img"
+                  :alt="report.title"
+                  class="min-w-16 h-12 object-fill rounded-md shadow-sm"
+                />
                 <div>
-                  <span class="text-sm font-bold text-gray-900 line-clamp-1">{{
-                    report.title
-                  }}</span>
-                </div>
-                <div>
-                  <span class="text-gray-400 font-thin text-xs">{{
-                    formatReportDate(report.date)
-                  }}</span>
+                  <div>
+                    <span
+                      class="text-sm font-bold text-gray-900 line-clamp-1"
+                      >{{ report.title }}</span
+                    >
+                  </div>
+                  <div>
+                    <span class="text-gray-400 font-thin text-xs">{{
+                      formatReportDate(report.date)
+                    }}</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+          <NuxtLink
+            to="#"
+            class="flex justify-center mt-5 text-xs font-thin text-gray-400"
+            >Ver todos</NuxtLink
+          >
+        </section>
+        <div class="border-b w-full my-4"></div>
+
+        <div class="flex flex-col gap-2">
+          <button
+            class="bg-gray-50 rounded-md px-4 py-2 text-gray-700 font-extrabold"
+            @click="goToHome()"
+          >
+            Inicio
+          </button>
+          <NuxtLink
+            class="bg-gray-50 text-center rounded-md px-4 py-2 text-gray-700 font-extrabold"
+            to="#"
+            >Incentivos</NuxtLink
+          >
         </div>
-        <NuxtLink
-          to="#"
-          class="flex justify-center mt-5 text-xs font-thin text-gray-400"
-          >Ver todos</NuxtLink
+      </div>
+
+      <section v-if="user" class="">
+        <button
+          class="w-full px-4 py-2 bg-red-500 text-white rounded-md"
+          @click="logout"
         >
+          Cerrar sesión
+        </button>
       </section>
-      <div class="border-b w-full my-4"></div>
+      <section v-else class="flex flex-col gap-2">
+        <UiLinkSecondary to="/auth/login" class="md:hidden shadow"
+          >Acceder</UiLinkSecondary
+        >
+        <UiLink
+          to="/auth/register"
+          class="md:hidden text-gray-900 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200"
+        >
+          Crear Cuenta
+        </UiLink>
+      </section>
     </div>
   </aside>
 </template>
 <script setup>
 import moment from "moment";
+
+const router = useRouter();
+const { latitude, longitude, getLocation } = useGeolocation();
+const { userInfo, logout } = useFirebaseAuth();
+
+const user = computed(() => {
+  return userInfo.value;
+});
 
 const props = defineProps({
   openSidebar: {
@@ -100,6 +171,22 @@ const reports = ref([
 const formatReportDate = (date) => {
   return moment(date).fromNow();
 };
+
+const goToHome = () => {
+  if (latitude.value && longitude.value) {
+    router.push({
+      path: "/",
+      query: {
+        latitude: latitude.value,
+        longitude: longitude.value,
+      },
+    });
+  }
+};
+
+onMounted(() => {
+  getLocation();
+});
 </script>
 
 <style scoped>

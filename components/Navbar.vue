@@ -25,12 +25,53 @@
           WaterWatch
         </button>
       </div>
-      <div class="gap-4 flex items-center">
-        <UiLinkSecondary to="#" class="hidden md:flex shadow"
+      <div v-if="user" class="hidden md:block">
+        <picture v-if="user.providerData[0].photoURL !== null">
+          <source
+            :srcset="user.providerData[0].photoURL"
+            media="(orientation: portrait)"
+          />
+          <img
+            :src="user.providerData[0].photoURL"
+            :alt="`${user.email} image`"
+            class="w-10 rounded-full"
+          />
+        </picture>
+        <div v-else class="flex items-center">
+          <picture class="cursor-pointer">
+            <source
+              srcset="/public/img/noimagep.jpg"
+              media="(orientation: portrait)"
+            />
+            <img
+              src="/public/img/noimagep.jpg"
+              :alt="`${user.email} image`"
+              class="w-10 rounded-full"
+            />
+          </picture>
+          <UiDropdownU>
+            <h1 class="font-extrabold text-sm text-gray-800">{{ user.uid }}</h1>
+            <span class="text-gray-400 font-thin text-sm">{{
+              user.email
+            }}</span>
+            <div class="mt-4">
+              <button
+                type="button"
+                @click="logout"
+                class="text-sm text-gray-700 font-semibold hover:text-red-500 w-full text-left transition-colors ease-in-out duration-300"
+              >
+                Cerrar sesión
+              </button>
+            </div>
+          </UiDropdownU>
+        </div>
+      </div>
+      <div class="gap-4 flex items-center" v-else>
+        <UiLinkSecondary to="/auth/login" class="hidden md:flex shadow"
           >Acceder</UiLinkSecondary
         >
         <UiLink
-          to="#"
+          to="/auth/register"
           class="hidden md:flex text-gray-900 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-200"
         >
           Crear Cuenta
@@ -82,9 +123,14 @@ const isTransparent = ref(false);
 const openSidebar = useLocalStorage(false, "mobileSidebar");
 const router = useRouter();
 const { latitude, longitude, getLocation } = useGeolocation();
+const { userInfo, logout } = useFirebaseAuth();
+const user = computed(() => {
+  return userInfo.value;
+});
 
 onMounted(() => {
   getLocation();
+  console.log(user.value);
   window.addEventListener("scroll", handleScroll);
 });
 

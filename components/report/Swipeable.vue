@@ -21,7 +21,7 @@
     </div>
     <div class="flex flex-col h-full">
       <div class="flex-1 overflow-y-auto p-4 pb-[70px]">
-        <ReportContentMobile />
+        <Report />
       </div>
     </div>
   </div>

@@ -10,9 +10,20 @@ export const useMapStore = defineStore("mapStore", () => {
 
   function initializeMap(mapContainer, latitude, longitude) {
     if (window.google) {
+      const mexicoBounds = {
+        north: 32.718653,
+        south: 14.532866,
+        west: -118.455109,
+        east: -86.811982,
+      };
+
       map = new google.maps.Map(mapContainer, {
         center: { lat: latitude, lng: longitude },
         zoom: 17,
+        restriction: {
+          latLngBounds: mexicoBounds,
+          strictBounds: true,
+        },
       });
 
       marker = new google.maps.Marker({
