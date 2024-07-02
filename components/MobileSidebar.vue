@@ -52,8 +52,8 @@
               }}</span>
             </div>
           </div>
-          <div class="border-b w-full my-4"></div>
         </section>
+        <div v-if="user" class="border-b w-full my-4"></div>
 
         <section>
           <h3 class="text-sm text-gray-400">Recientes</h3>

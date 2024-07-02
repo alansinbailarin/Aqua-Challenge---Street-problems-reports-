@@ -120,7 +120,7 @@
 </template>
 <script setup>
 const isTransparent = ref(false);
-const openSidebar = useLocalStorage(false, "mobileSidebar");
+const openSidebar = ref(false);
 const router = useRouter();
 const { latitude, longitude, getLocation } = useGeolocation();
 const { userInfo, logout } = useFirebaseAuth();

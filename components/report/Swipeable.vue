@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-const isOpen = useLocalStorage(false, "drawerOpen");
+const isOpen = useLocalStorage(false);
 
 function toggleSwipper() {
   isOpen.value = !isOpen.value;
