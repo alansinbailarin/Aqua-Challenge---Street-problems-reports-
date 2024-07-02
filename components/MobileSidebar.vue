@@ -4,10 +4,11 @@
       v-if="openSidebar"
       class="fixed inset-0 bg-black opacity-30 backdrop-blur-3xl z-10 h-screen"
       @click="closeSidebar"
+      @touchend="closeSidebar"
     ></div>
   </transition>
   <aside
-    class="fixed top-0 right-0 z-50 bg-white shadow-lg w-[22rem] transform transition-transform ease-in-out duration-300 overflow-y-auto h-[100vh]"
+    class="fixed top-0 right-0 z-50 bg-white shadow-lg w-[22rem] transform transition-transform ease-in-out duration-300 overflow-y-auto h-full"
     :class="{
       'translate-x-0': openSidebar,
       'translate-x-full': !openSidebar,
