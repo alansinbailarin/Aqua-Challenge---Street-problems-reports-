@@ -7,7 +7,7 @@
     ></div>
   </transition>
   <aside
-    class="fixed top-0 right-0 z-50 h-screen bg-white shadow-lg w-[22rem] transform transition-transform ease-in-out duration-300"
+    class="fixed top-0 right-0 z-50 h-screen bg-white shadow-lg w-[22rem] transform transition-transform ease-in-out duration-300 overflow-y-auto"
     :class="{
       'translate-x-0': openSidebar,
       'translate-x-full': !openSidebar,
