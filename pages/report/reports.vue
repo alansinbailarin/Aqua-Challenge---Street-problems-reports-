@@ -1,7 +1,8 @@
 <template>
   <div class="md:flex md:min-h-screen">
-    <ReportReportsBarside :reports="reports" />
-    <ReportReportsMap :reports="reports" />
+    <ReportReportsBarside class="hidden md:block h-screen" :reports="reports" />
+    <ReportReportsMap class="h-screen" :reports="reports" />
+    <ReportReportsSwipeable class="md:hidden" :reports="reports" />
   </div>
   <UiLoader v-if="loader" />
 </template>
