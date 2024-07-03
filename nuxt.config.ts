@@ -3,11 +3,10 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       mapsApiKey: process.env.NUXT_MAPS_API_KEY,
-
       apiKey: process.env.NUXT_FIREBASE_APIKEY,
       authDomain: process.env.NUXT_FIREBASE_AUTHDOMAIN,
       projectId: process.env.NUXT_FIREBASE_PROJECTID,
-      storageBucket: process.env.NUXT_FIREBASE_STORAGEBUCKET,
+      storageBucket: process.env.NUXT_STORAGE_URL,
       messagingSenderId: process.env.NUXT_FIREBASE_MESSAGINGSENDERID,
       appId: process.env.NUXT_FIREBASE_APPID,
       // measurementId: process.env.NUXT_FIREBASE_MEASUREMENTID,

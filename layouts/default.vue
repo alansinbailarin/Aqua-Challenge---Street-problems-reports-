@@ -17,10 +17,6 @@ onMounted(() => {
   initFlowbite();
 });
 
-const toggleSidebar = () => {
-  openSidebar.value = !openSidebar.value;
-};
-
 const closeMobileSidebar = () => {
   openSidebar.value = false;
 };

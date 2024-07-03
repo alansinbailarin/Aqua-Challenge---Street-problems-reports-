@@ -137,6 +137,7 @@
         bastante especifico con las mismas y recuerda que la calidad es
         importante!
       </p>
+      <UiLoader v-if="isLoading" />
       <UiFileInput />
     </div>
     <UiButton
@@ -150,18 +151,18 @@
 </template>
 
 <script setup>
-import { useForm } from "vee-validate";
-import * as yup from "yup";
-
 const mapStore = useMapStore();
 const fileStore = useFileStore();
 const { latitude, longitude, getLocation } = useGeolocation();
 const token = useLocalStorage(null, "token");
 const { $toast } = useNuxtApp();
 const { userInfo } = useFirebaseAuth();
+const { addFile, isLoading } = fileStore;
 
 const location = computed(() => mapStore.selectedLocationName);
-const previewImages = computed(() => fileStore.previewImages);
+const previewImages = computed(() =>
+  fileStore.previewImages.map((image) => image.url)
+);
 const showTrashIcon = ref(false);
 
 const title = useLocalStorage(null, "reportTitle");

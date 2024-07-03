@@ -1,9 +1,8 @@
+// plugins/firebase.client.js
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
-export default defineNuxtPlugin((nuxtPlugin) => {
+export default defineNuxtPlugin((nuxtApp) => {
   const config = useRuntimeConfig();
 
   const firebaseConfig = {
@@ -13,16 +12,15 @@ export default defineNuxtPlugin((nuxtPlugin) => {
     storageBucket: config.public.storageBucket,
     messagingSenderId: config.public.messagingSenderId,
     appId: config.public.appId,
-    // measurementId: config.public.measurementId,
   };
 
   const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const auth = getAuth(app);
+  const storage = getStorage(app);
 
   return {
     provide: {
-      auth,
+      firebaseApp: app,
+      storage,
     },
   };
 });

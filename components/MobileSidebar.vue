@@ -100,7 +100,7 @@
           <NuxtLink
             class="bg-gray-50 text-center rounded-md px-4 py-2 text-gray-700 font-extrabold"
             to="#"
-            >Incentivos</NuxtLink
+            >Recompensas</NuxtLink
           >
         </div>
       </div>

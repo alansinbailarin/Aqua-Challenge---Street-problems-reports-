@@ -54,7 +54,7 @@ export function useFirebaseAuth() {
           window.location.reload();
         }
 
-        return "Inicio de sesión exitoso. Redirigiendo...";
+        return "Exitoso";
       },
       error: (error) => {
         console.error(error);
@@ -83,9 +83,13 @@ export function useFirebaseAuth() {
             if (userInfo.value && route.path === "/") {
               window.location.reload();
             }
+          } else {
+            userInfo.value = null;
+            localStorage.removeItem("userInfo");
+            token.value = null;
+            localStorage.removeItem("token");
           }
         });
-        userInfo.value = user;
         resolve(user);
       });
     });
