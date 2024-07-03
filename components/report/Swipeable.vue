@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-const isOpen = useLocalStorage(false);
+const isOpen = ref(false);
 
 function toggleSwipper() {
   isOpen.value = !isOpen.value;

@@ -12,6 +12,7 @@
   "dependencies": {
     "@vee-validate/nuxt": "^4.13.1",
     "@vee-validate/rules": "^4.13.1",
+    "axios": "^1.7.2",
     "clsx": "^2.1.1",
     "firebase": "^10.12.2",
     "flatted": "^3.3.1",

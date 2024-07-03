@@ -75,7 +75,7 @@
                   </div>
                   <div>
                     <span class="text-gray-400 font-thin text-xs">{{
-                      formatReportDate(report.date)
+                      date.fromNowDate(report.date)
                     }}</span>
                   </div>
                 </div>
@@ -128,11 +128,10 @@
   </aside>
 </template>
 <script setup>
-import moment from "moment";
-
 const router = useRouter();
 const { latitude, longitude, getLocation } = useGeolocation();
 const { userInfo, logout } = useFirebaseAuth();
+const date = useDate();
 
 const user = computed(() => {
   return userInfo.value;
@@ -168,10 +167,6 @@ const reports = ref([
     date: "2024-06-25",
   },
 ]);
-
-const formatReportDate = (date) => {
-  return moment(date).fromNow();
-};
 
 const goToHome = () => {
   if (latitude.value && longitude.value) {

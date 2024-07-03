@@ -1,8 +1,9 @@
-// plugins/firebase.client.js
 import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin((nuxtPlugin) => {
   const config = useRuntimeConfig();
 
   const firebaseConfig = {
@@ -15,11 +16,13 @@ export default defineNuxtPlugin((nuxtApp) => {
   };
 
   const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const auth = getAuth(app);
   const storage = getStorage(app);
 
   return {
     provide: {
-      firebaseApp: app,
+      auth,
       storage,
     },
   };

@@ -159,6 +159,14 @@ const { $toast } = useNuxtApp();
 const { userInfo } = useFirebaseAuth();
 const { addFile, isLoading } = fileStore;
 
+const selectedLatitude = ref(latitude.value);
+const selectedLongitude = ref(longitude.value);
+
+watchEffect(() => {
+  selectedLatitude.value = mapStore.selectedLocation.lat;
+  selectedLongitude.value = mapStore.selectedLocation.lng;
+});
+
 const location = computed(() => mapStore.selectedLocationName);
 const previewImages = computed(() =>
   fileStore.previewImages.map((image) => image.url)
@@ -231,8 +239,8 @@ const form = reactive({
   location: {
     address: location || null,
     geopoint: {
-      latitude: latitude || null,
-      longitude: longitude || null,
+      latitude: selectedLatitude || null,
+      longitude: selectedLongitude || null,
     },
   },
 });
