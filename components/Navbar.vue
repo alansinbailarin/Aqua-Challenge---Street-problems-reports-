@@ -130,7 +130,6 @@ const user = computed(() => {
 
 onMounted(() => {
   getLocation();
-  console.log(user.value);
   window.addEventListener("scroll", handleScroll);
 });
 

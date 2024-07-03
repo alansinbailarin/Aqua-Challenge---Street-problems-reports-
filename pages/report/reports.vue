@@ -8,17 +8,20 @@
 </template>
 
 <script setup>
-import { ref, onBeforeMount } from "vue";
 import axios from "axios";
 
+const { getLocation } = useGeolocation();
+const route = useRoute();
 const reports = ref([]);
 const loader = ref(true);
+const latitude = ref(route.query.latitude);
+const longitude = ref(route.query.longitude);
 
 const getReports = async () => {
   try {
     loader.value = true;
     const response = await axios.get(
-      "https://us-central1-atlantes-del-agua.cloudfunctions.net/appPublic/reports"
+      `https://us-central1-atlantes-del-agua.cloudfunctions.net/appPublic/reports?latitude=${latitude.value}&longitude=${longitude.value}`
     );
 
     reports.value = response.data;
@@ -31,6 +34,8 @@ const getReports = async () => {
 };
 
 onBeforeMount(() => {
+  getLocation();
   getReports();
+  console.log(route);
 });
 </script>

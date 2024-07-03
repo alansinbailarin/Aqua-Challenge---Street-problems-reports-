@@ -20,7 +20,6 @@ const maxReloadAttempts = ref(5);
 function reloadMap() {
   if (reloadAttempts.value < maxReloadAttempts.value) {
     reloadAttempts.value++;
-    console.log(`Intentando recargar el mapa: intento ${reloadAttempts.value}`);
     mapStore.initializeMap(mapContainer.value, latitude.value, longitude.value);
 
     setTimeout(() => {

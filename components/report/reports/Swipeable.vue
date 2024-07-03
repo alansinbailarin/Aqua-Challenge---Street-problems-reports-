@@ -43,7 +43,6 @@ const props = defineProps({
 function toggleSwipper() {
   isOpen.value = !isOpen.value;
 }
-console.log("Hola desde mi swipeable");
 </script>
 
 <style scoped></style>

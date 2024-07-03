@@ -151,6 +151,7 @@
 </template>
 
 <script setup>
+import axios from "axios";
 const mapStore = useMapStore();
 const fileStore = useFileStore();
 const { latitude, longitude, getLocation } = useGeolocation();
@@ -236,56 +237,58 @@ const form = reactive({
   size: selectedLeakSize || null,
   duration: selectedLeakDuration || null,
   images: previewImages || null,
-  location: {
-    address: location || null,
-    geopoint: {
-      latitude: selectedLatitude || null,
-      longitude: selectedLongitude || null,
-    },
+  address: location || null,
+  coordinates: {
+    latitude: selectedLatitude || null,
+    longitude: selectedLongitude || null,
   },
 });
 
 const submitReport = async () => {
-  if (userInfo) {
-    const reportPromise = useFetch(
-      "https://us-central1-atlantes-del-agua.cloudfunctions.net/app/createReport",
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token.value}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      }
-    );
-
-    $toast.promise(reportPromise, {
-      loading: "Enviando reporte...",
-      success: (response) => {
-        const data = response.data.value;
-        if (data !== null) {
-          localStorage.removeItem("reportTitle");
-          localStorage.removeItem("reportDescription");
-          localStorage.removeItem("reportGravity");
-          localStorage.removeItem("selectedReportStatus");
-          localStorage.removeItem("selectedLeakType");
-          localStorage.removeItem("selectedLeakSize");
-          localStorage.removeItem("selectedLeakDuration");
-          localStorage.removeItem("selectedImpact");
-
-          setTimeout(() => {
-            window.location.reload();
-          }, 4000);
-
-          return "Tu reporte ha sido enviado a las autoridades locales, tan pronto como sea posible, el reporte será atendido.";
-        } else {
-          throw new Error(
-            "Ha ocurrido un error con el servidor, vuelva a intentar de nuevo más tarde."
-          );
+  if (userInfo.value) {
+    try {
+      console.log("Enviando solicitud...");
+      const response = await axios.post(
+        "https://us-central1-atlantes-del-agua.cloudfunctions.net/app/createReport",
+        form,
+        {
+          headers: {
+            Authorization: `Bearer ${token.value}`,
+            "Content-Type": "application/json",
+          },
         }
-      },
-      error: "Por favor, introduce el titulo y la descripcion de tu reporte.",
-    });
+      );
+
+      console.log("Respuesta recibida:", response);
+
+      if (response.data) {
+        localStorage.removeItem("reportTitle");
+        localStorage.removeItem("reportDescription");
+        localStorage.removeItem("reportGravity");
+        localStorage.removeItem("selectedReportStatus");
+        localStorage.removeItem("selectedLeakType");
+        localStorage.removeItem("selectedLeakSize");
+        localStorage.removeItem("selectedLeakDuration");
+        localStorage.removeItem("selectedImpact");
+
+        $toast.success("Reporte enviado con exito", {
+          description:
+            "Tu reporte ha sido enviado a las autoridades locales, tan pronto como sea posible, el reporte será atendido.",
+        });
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 4000);
+      } else {
+        throw new Error(
+          "Ha ocurrido un error con el servidor, vuelva a intentar de nuevo más tarde."
+        );
+      }
+    } catch (error) {
+      $toast.error("Ha ocurrido un error", {
+        description: `${error.response?.data.error}`,
+      });
+    }
   } else {
     $toast.error("Por favor accede a tu cuenta", {
       description: "Para crear un reporte, por favor accede a tu cuenta",

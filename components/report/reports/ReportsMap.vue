@@ -28,16 +28,18 @@ onMounted(async () => {
     longitude.value
   );
 
+  console.log(props.reports);
+
   watch(
     () => props.reports,
     (newReports) => {
       if (newReports && newReports.length) {
         newReports.forEach((report) => {
-          const { geopoint } = report.location;
-          if (geopoint) {
+          const { coordinates } = report;
+          if (coordinates) {
             reportsMapStore.addReportMarker({
-              lat: geopoint._latitude,
-              lng: geopoint._longitude,
+              lat: coordinates._latitude,
+              lng: coordinates._longitude,
             });
           }
         });

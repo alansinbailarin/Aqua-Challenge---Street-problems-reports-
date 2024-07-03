@@ -23,7 +23,6 @@ export function useFirebaseAuth() {
       loading: "Registrando...",
       success: (response) => {
         const user = response.user;
-        console.log(user);
 
         if (user) {
           navigateTo("/auth/login");
@@ -75,7 +74,6 @@ export function useFirebaseAuth() {
     new Promise((resolve) => {
       const unsubscribe = onAuthStateChanged($auth, (user) => {
         unsubscribe();
-        console.log("Current user");
         watch(userInfo, async (newUserInfo, oldUserInfo) => {
           if (user !== null) {
             userInfo.value = user;
