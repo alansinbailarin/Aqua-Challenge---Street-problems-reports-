@@ -12,9 +12,9 @@
         <button @click="goToHome()" class="text-gray-700 font-bold">
           Inicio
         </button>
-        <NuxtLink to="/report/reports" class="text-gray-700 font-bold"
-          >Explorar reportes</NuxtLink
-        >
+        <button @click="exploreReports" class="text-gray-700 font-bold">
+          Explorar reportes
+        </button>
         <NuxtLink to="#" class="text-gray-700 font-bold">Recompensas</NuxtLink>
       </div>
       <div>
@@ -145,6 +145,18 @@ const goToHome = () => {
   if (latitude.value && longitude.value) {
     router.push({
       path: "/",
+      query: {
+        latitude: latitude.value,
+        longitude: longitude.value,
+      },
+    });
+  }
+};
+
+const exploreReports = () => {
+  if (latitude.value && longitude.value) {
+    router.push({
+      path: "/report/reports",
       query: {
         latitude: latitude.value,
         longitude: longitude.value,

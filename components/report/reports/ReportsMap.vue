@@ -35,13 +35,7 @@ onMounted(async () => {
     (newReports) => {
       if (newReports && newReports.length) {
         newReports.forEach((report) => {
-          const { coordinates } = report;
-          if (coordinates) {
-            reportsMapStore.addReportMarker({
-              lat: coordinates._latitude,
-              lng: coordinates._longitude,
-            });
-          }
+          reportsMapStore.addReportMarker(report);
         });
       }
     },

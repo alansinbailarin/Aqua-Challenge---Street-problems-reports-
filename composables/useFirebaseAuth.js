@@ -1,5 +1,6 @@
 import {
   createUserWithEmailAndPassword,
+  setPersistence,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,

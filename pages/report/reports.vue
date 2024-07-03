@@ -1,6 +1,11 @@
 <template>
   <div class="md:flex md:min-h-screen">
-    <ReportReportsBarside class="hidden md:block h-screen" :reports="reports" />
+    <ReportReportsBarside
+      class="hidden md:block h-screen"
+      :reports="reports"
+      :latitude="latitude"
+      :longitude="longitude"
+    />
     <ReportReportsMap class="h-screen" :reports="reports" />
     <ReportReportsSwipeable class="md:hidden" :reports="reports" />
   </div>
@@ -33,9 +38,6 @@ const getReports = async () => {
   }
 };
 
-onBeforeMount(() => {
-  getLocation();
-  getReports();
-  console.log(route);
-});
+getLocation();
+getReports();
 </script>

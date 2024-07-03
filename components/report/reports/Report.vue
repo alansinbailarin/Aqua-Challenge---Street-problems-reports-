@@ -1,6 +1,13 @@
 <template>
-  <div class="flex flex-col gap-3">
-    <UiCard v-if="reports.length > 0" v-for="report in props.reports">
+  <div class="flex flex-col gap-3 md:mt-20">
+    <h1 class="text-gray-800 font-extrabold text-lg mb-3">Cerca de ti</h1>
+    <UiCard
+      class="cursor-pointer"
+      v-if="reports.length > 0"
+      v-for="report in props.reports"
+      :key="report.id"
+      @click="selectReport(report)"
+    >
       <div class="flex items-center justify-between">
         <div>
           <h1 class="text-gray-900 font-extrabold text-sm">
@@ -39,4 +46,10 @@ const props = defineProps({
     required: true,
   },
 });
+
+const reportsMapStore = useReportsMapStore();
+
+function selectReport(report) {
+  reportsMapStore.selectReport(report);
+}
 </script>

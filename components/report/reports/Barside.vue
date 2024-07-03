@@ -1,18 +1,34 @@
+import { ReportReportsSelectedReport } from '../../../.nuxt/components';
 <template>
   <aside
-    class="w-3/12 bg-white border-r border-gray-100 p-4 shadow-sm overflow-y-auto overflow-auto mt-20"
+    class="w-3/12 bg-white border-r border-gray-100 p-4 shadow-sm overflow-y-auto overflow-auto"
   >
-    <h1 class="text-gray-800 font-extrabold text-lg mb-3">Cerca de ti</h1>
-    <ReportReportsReport :reports="reports" />
+    <ReportReportsSelectedReport
+      v-if="selectedReport"
+      :selectedReport="selectedReport"
+      :latitude="latitude"
+      :longitude="longitude"
+    />
+    <ReportReportsReport v-else :reports="reports" />
   </aside>
 </template>
 
 <script setup>
 const date = useDate();
+const reportsMapStore = useReportsMapStore();
+const selectedReport = computed(() => reportsMapStore.selectedReport);
 
 const props = defineProps({
   reports: {
     type: Array,
+    required: true,
+  },
+  latitude: {
+    type: Number,
+    required: true,
+  },
+  longitude: {
+    type: Number,
     required: true,
   },
 });

@@ -21,9 +21,13 @@
     </div>
     <div class="flex flex-col h-full">
       <div class="flex-1 overflow-y-auto p-4 pb-[70px]">
-        <h1 class="text-gray-800 font-extrabold text-lg mb-3">Cerca de ti</h1>
-
-        <ReportReportsReport :reports="reports" />
+        <ReportReportsSelectedReport
+          v-if="selectedReport"
+          :selectedReport="selectedReport"
+          :latitude="latitude"
+          :longitude="longitude"
+        />
+        <ReportReportsReport v-else :reports="reports" />
       </div>
     </div>
   </div>
@@ -32,10 +36,20 @@
 <script setup>
 const date = useDate();
 const isOpen = ref(false);
+const reportsMapStore = useReportsMapStore();
+const selectedReport = computed(() => reportsMapStore.selectedReport);
 
 const props = defineProps({
   reports: {
     type: Array,
+    required: true,
+  },
+  latitude: {
+    type: Number,
+    required: true,
+  },
+  longitude: {
+    type: Number,
     required: true,
   },
 });
